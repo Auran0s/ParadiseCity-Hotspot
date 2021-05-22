@@ -1,19 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Flask-SSE Quickstart</title>
-</head>
-<body>
-  <h1>Flask-SSE Quickstart</h1>
-  <script>
-    var source = new EventSource("{{ url_for('sse.stream') }}");
-    source.addEventListener('greeting', function(event) {
-        var data = JSON.parse(event.data);
-        alert("The server says " + data.message);
-    }, false);
-    source.addEventListener('error', function(event) {
-        alert("Failed to connect to event stream. Is Redis running?");
-    }, false);
-  </script>
-</body>
+    <head>
+        <title>ParadiseCity</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="relative w-screen h-screen bg-green-200">
+            <div class="flex flex-row justify-center w-full h-auto">
+                <div class="pt-5">
+                    <h1 class="font-lato font-bold text-5xl text-gray-600 text-center">ParadiseCity</h1>
+                </div>
+            </div>
+
+            <div clas="flex flex-wrap">
+                <div class="grid grid-cols-1 justify-items-center pt-20 px-5">
+                    <button onclick="screenSwitch(live)" class="flex p-24 w-full h-60 rounded-lg hover:shadow-xl bg-blue-500">
+                        <div class="grid grid-cols-2">
+                            <div class="font-lato font-bold text-white text-5xl">Lancer un live !</div>
+                            <div class="relative">
+                                <div class="absolute right-1">
+                                    <div class="text-5xl text-white fa fa-chevron-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <script type="module" src="{{ url_for('static', filename='index.js') }}"></script>
+    </body>
 </html>
