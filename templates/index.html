@@ -16,7 +16,7 @@
 
             <div clas="flex flex-wrap">
                 <div class="grid grid-cols-1 justify-items-center pt-20 px-5">
-                    <button onclick="screenSwitch(live)" class="flex p-24 w-full h-60 rounded-lg hover:shadow-xl bg-blue-500">
+                    <button onclick="screenSwitch()" class="flex p-24 w-full h-60 rounded-lg hover:shadow-xl bg-blue-500">
                         <div class="grid grid-cols-2">
                             <div class="font-lato font-bold text-white text-5xl">Lancer un live !</div>
                             <div class="relative">
@@ -31,5 +31,6 @@
 
         </div>
         <script type="module" src="{{ url_for('static', filename='index.js') }}"></script>
+        <script language="JavaScript" type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
     </body>
 </html>

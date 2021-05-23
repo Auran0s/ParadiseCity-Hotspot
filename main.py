@@ -1,16 +1,32 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 
-app = Flask(__name__) 
+app = Flask(__name__)
 
-message = "okay"
+screenCommandes = {
+    'liveOn': False
+}
 
+# Route for the mobile phone
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route('/screenSwitch', methods=['GET', 'POST'])
-def screenSwitch():
-    if request.method == "POST":
-       return message, 200
+@app.route('/screenSwitch/<value>', methods=['GET', 'POST'])
+def screenSwitch(value):
+    if request.method == "POST" and value == "liveOn":
+        global screenCommandes
+        screenCommandes = {value: True}
+        print(screenCommandes)
+        return screenCommandes, 200
     else:
-        return "get"
+        return screenCommandes, 200
+
+@app.route('/livescreencontrol')
+def liveScreenControl():
+    return render_template("livescreencontrol.html")
+
+# Route for the screen
+
+@app.route('/home')
+def home():
+   return render_template("home.html")
