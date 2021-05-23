@@ -9,7 +9,7 @@ screenCommandes = {
 # Route for the mobile phone
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("application/index.html")
 
 @app.route('/screenSwitch/<value>', methods=['GET', 'POST'])
 def screenSwitch(value):
@@ -21,12 +21,16 @@ def screenSwitch(value):
     else:
         return screenCommandes, 200
 
-@app.route('/livescreencontrol')
-def liveScreenControl():
-    return render_template("livescreencontrol.html")
+@app.route('/livecontrol')
+def liveControl():
+    return render_template("application/livecontrol.html")
 
 # Route for the screen
 
 @app.route('/home')
 def home():
-   return render_template("home.html")
+   return render_template("screen/index.html")
+
+@app.route('/livescreen')
+def livescreen():
+   return render_template("screen/livescreen.html")
