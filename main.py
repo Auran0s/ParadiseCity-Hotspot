@@ -2,8 +2,19 @@ from flask import Flask, render_template, request, redirect, session, url_for
 
 app = Flask(__name__)
 
-screenCommandes = {
-    'liveOn': False
+screenData = {
+    'User': 'Screen 1',
+    'URL ngrok': 'https://ngrok.io',
+    'switchScreens':{
+        'Home': True,
+        'Live': False,
+        'Game': False
+    },
+    'Notifications':{
+        'askLive':False,
+        'Sondage':True,
+        'SondageMessage':['Ceci est un sondage test']
+        }
 }
 
 # Route for the mobile phone
@@ -13,13 +24,20 @@ def index():
 
 @app.route('/screenSwitch/<value>', methods=['GET', 'POST'])
 def screenSwitch(value):
-    if request.method == "POST" and value == "liveOn":
-        global screenCommandes
-        screenCommandes = {value: True}
-        print(screenCommandes)
-        return screenCommandes, 200
+    if request.method == "GET" and value != None:
+        global screenData
+        print(screenData['switchScreens']['Live'])
+        values = value.split("|")
+        print(values[1])
+        try:
+            if values[0] == 'Live' and values[1] == 'False':
+                return screenData, 200
+        except:
+            print("erreur")
+            return 'nop', 200
+
     else:
-        return screenCommandes, 200
+        return 'yes', 200
 
 @app.route('/livecontrol')
 def liveControl():
