@@ -1,22 +1,36 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!doctype html>
 <html>
     <head>
+        <title>ParadiseCity</title>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>test</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="{{ url_for('static', filename='application/styles.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        
-        <script src="" async defer></script>
+        <div class="relative w-screen h-screen bg-green-200">
+            <div class="flex flex-row justify-center w-full h-auto">
+                <div class="pt-5">
+                    <h1 class="font-lato font-bold text-5xl text-gray-600 text-center">ParadiseCity</h1>
+                </div>
+            </div>
+
+            <div clas="flex flex-wrap">
+                <div class="grid grid-cols-1 justify-items-center pt-20 px-5">
+                    <button onclick="screenSwitch()" class="flex p-24 w-full h-60 rounded-lg hover:shadow-xl bg-blue-500">
+                        <div class="grid grid-cols-2">
+                            <div class="font-lato font-bold text-white text-5xl">Couper le live !</div>
+                            <div class="relative">
+                                <div class="absolute right-1">
+                                    <div class="text-5xl text-white fa fa-chevron-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <script type="module" src="{{ url_for('static', filename='application/index.js') }}"></script>
+        <script language="JavaScript" type="text/javascript" src="{{ url_for('static', filename='application/livecontrol.js') }}"></script>
     </body>
 </html>
