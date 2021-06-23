@@ -1,9 +1,9 @@
 function checkControl(){
-    fetch('/screenSwitch/live').then(function(response) {
+    fetch('/api/screenSwitch/GetData').then(function(response) {
         return response.json();
       }).then(function(data) {
         console.log(data['switchScreens']['Live']);
-        if (data['switchScreens']['Live'] == false) {
+        if (data['switchScreens']['Live'] == 'false') {
           document.location.href = '/home';
         }
       });

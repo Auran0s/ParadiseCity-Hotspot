@@ -1,0 +1,94 @@
+body{
+    margin: 0;
+    padding:0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+/* video section */
+.root{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.label{
+    display: none;
+}
+
+form{
+    position: absolute;
+    z-index: 50;
+}
+
+.participant {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 40;
+}
+.participant-ext{
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.participant-ext div video:not(.trackZoomed) {
+    height: 100%;
+    width: 100%;
+}
+.participant div {
+    text-align: center;
+}
+
+.participant div video:not(.trackZoomed) {
+    width: 360px;
+    height: 240px;
+}
+.participantZoomed {
+    width: 100%;
+    height: calc(100% - 5px);
+    grid-template-rows: auto 30px;
+}
+.participantHidden {
+    display: none;
+}
+.trackZoomed {
+    width: 100%;
+    height: 100%;
+}
+.participantZoomed div video:not(.trackZoomed) {
+    display: none;
+}
+.participantHidden div video {
+    display: none;
+}
+.participantHidden .label {
+    display: none;
+}
+.participantZoomed .label {
+    margin-top: 8px;
+}
+
+/* chat section */
+
+#root.withChat #chat {
+    width: calc(100% - 10px);
+    display: grid;
+    grid-template-rows: auto 30px;
+    border-left: 1px solid black;
+    padding: 5px;
+}
+#root:not(withChat) #chat {
+    display: none;
+}
+#chat #chat-scroll {
+    overflow: auto;
+}
+#chat #chat-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1em;
+    max-height: 1px;
+}
