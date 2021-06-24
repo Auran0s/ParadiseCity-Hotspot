@@ -4,30 +4,15 @@ import json
 import requests
 import time
 
-from twilio.jwt.access_token.grants import VideoGrant, ChatGrant
-from twilio.rest import Client
-from twilio.base.exceptions import TwilioRestException
-
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-twilio_account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
-twilio_api_key_sid = os.environ.get('TWILIO_API_KEY_SID')
-twilio_api_key_secret = os.environ.get('TWILIO_API_KEY_SECRET')
-twilio_client = Client(twilio_api_key_sid, twilio_api_key_secret,
-                       twilio_account_sid)
 
 app = Flask(__name__)
 CORS(app)
 
 screenData = {
-    'User': 'Screen 1',
-    'URL ngrok': 'https://ngrok.io',
-    'switchScreens':{
-        'Home': 'true',
-        'Live': 'false',
-        'Game': 'false'
     'screensCommands':{
         "screen1":{
             'Home': 'true',
@@ -52,20 +37,8 @@ screenData = {
 }
 
 
-# Route for the mobile phone
-@app.route('/')
-def index():
-    return render_template("application/index.html")
-
-# App route
-
-@app.route('/livecontrol')
-def liveControl():
-    return render_template("application/livecontrol.html")
-
 # Route for the screen
-
-@app.route('/home')
+@app.route('/')
 def home():
    return render_template("screen/index.html")
 
@@ -146,5 +119,5 @@ def sondage():
         
 
 if __name__ == '__main__':
-    app.run(#ssl_context=('cert.pem', 'key.pem'), 
+    app.run(ssl_context=('cert.pem', 'key.pem'), 
     host="0.0.0.0", debug=True, port=5001)
