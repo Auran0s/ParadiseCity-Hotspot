@@ -109,6 +109,24 @@ def manageMessages(action):
                 file.close
         return {'Messages':data}, 200
 
+@app.route('/api/sondage', methods=['GET', 'POST'])
+def sondage():
+    global screenData 
+    sondageData = screenData['Notifications']['Sondage']
+    data = request.get_json()
+    if request.method == 'GET':
+        return sondageData, 200
+    elif request.method == 'POST' and data != None:
+        if data['data'] == 'oui':
+            screenData['Notifications']['Sondage']['Answer']['oui'] = screenData['Notifications']['Sondage']['Answer']['oui'] + 1
+            return {'Message':'Vote taken [Oui]'}, 200
+        elif data['data'] == 'non':
+            screenData['Notifications']['Sondage']['Answer']['non'] = screenData['Notifications']['Sondage']['Answer']['non'] + 1
+            return {'Message':'Vote taken [Non]'}, 200
+    else:
+        return {'error message': 'bad request'}, 400
+        
+
 if __name__ == '__main__':
     app.run(#ssl_context=('cert.pem', 'key.pem'), 
     host="0.0.0.0", debug=True, port=5001)
