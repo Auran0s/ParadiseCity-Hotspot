@@ -76,26 +76,30 @@ def livescreen():
 # Routing API
 
 # Switching screen
-@app.route('/api/screenSwitch/<screen>/<value>', methods=['POST'])
-def screenSwitch(value, screen):
-    if request.method == "POST" and screen != None:
+@app.route('/api/screen/<screenID>/<action>/<value>', methods=['POST'])
+def screenSwitch(screenID, action, value):
+    if request.method == "POST" and screenID != None and screenID == '1' or screenID == '2':
         global screenData
-        if screen == 'Live' and value == 'On':
-                screenData['switchScreens']['Live'] = 'true' 
-                screenData['switchScreens']['Home'] = 'false'
+        # Switch screen views
+        if action == 'Live' and value == 'On' and screenData['screensCommands']['screen'+screenID]['Live'] != 'true':
+                screenData['screensCommands']['screen'+screenID]['Live'] = 'true' 
+                screenData['screensCommands']['screen'+screenID]['Home'] = 'false'
+                screenData['Notifications']['askLive'] = 'true'
                 return screenData, 200
-        if screen == 'Live' and value == 'Off':
-                screenData['switchScreens']['Live'] = 'false' 
-                screenData['switchScreens']['Home'] = 'true'
+        if action == 'Live' and value == 'Off' and screenData['screensCommands']['screen'+screenID]['Live'] != 'false':
+                screenData['screensCommands']['screen'+screenID]['Live'] = 'false' 
+                screenData['screensCommands']['screen'+screenID]['Home'] = 'true'
+                screenData['Notifications']['askLive'] = 'false'
                 return screenData, 200
+        
         else:
-            return 'False value', 200
-
-
-@app.route('/api/screenSwitch/GetData', methods=['GET'])
-def screenSwitchGetData():
-    return screenData, 200
-
+            return {'error messages':'value posted are not the values expected'}, 400
+    elif request.method == 'GET' and screenID != None and screenID == '1' or screenID == '2':
+        if action == 'getData':
+            return screenData, 200
+    else:
+        return {'error messages':'request or screenID not good'}, 400
+    
 # Get message
 @app.route('/api/messages/<action>', methods=['GET', 'POST'])
 def manageMessages(action):
