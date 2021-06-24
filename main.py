@@ -4,7 +4,6 @@ import json
 import requests
 import time
 
-from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant, ChatGrant
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
@@ -29,12 +28,27 @@ screenData = {
         'Home': 'true',
         'Live': 'false',
         'Game': 'false'
+    'screensCommands':{
+        "screen1":{
+            'Home': 'true',
+            'Live': 'false',
+        },
+        "screen2":{
+            'Home': 'true',
+            'Live': 'false',
+        }
     },
     'Notifications':{
         'askLive':'false',
         'Sondage':'true',
-        'SondageMessage':['Ceci est un sondage test']
+        'Sondage':{
+            "Message":"",
+            "Answer":{
+                "oui":12,
+                "non":27
+            }
         }
+    }
 }
 
 
