@@ -24,14 +24,14 @@ screenData = {
         }
     },
     'Notifications':{
-        'askLive':'false',
-        'Sondage':'true',
-        'Sondage':{
-            "Message":"",
-            "Answer":{
-                "oui":12,
-                "non":27
-            }
+        'askLive':'false'
+    },
+    'Sondage':{
+        'SondageState':'false',
+        "Message":"Aimez-vous les pizzas à l'ananas ?",
+        "Answer":{
+            "oui":12,
+            "non":27
         }
     }
 }
@@ -79,11 +79,19 @@ def manageMessages(action):
     if request.method == 'GET' and action == 'getData':
         with open("./messages.json", "r") as file:
             data = json.load(file)
-            file.close()
-        return {'Messages':data}, 200
+            nbOfMessages = len(data)
+            if nbOfMessages > 12:
+                lastMessage = nbOfMessages - 12
+                file.close()
+                return {'Messages':data[lastMessage:nbOfMessages]}, 200
+            else:
+                file.close()
+                return {'Messages':data[0:11]}, 200 
     elif request.method == 'POST' and action == 'newMessageText':
         newData = request.get_json()
         if newData != None:
+            listContent = list(newData['content'])
+            splitContent = ''.join(listContent[0:250])
             with open("./messages.json", "r+") as file:
                 data = json.load(file)
                 nbOfMessages = len(data)
@@ -92,6 +100,7 @@ def manageMessages(action):
                         "id":nextId,
                         "type":"text",
                         "filtre":newData['filtre'],
+                        "split_content": splitContent+' ...',
                         "content":newData['content'],
                     }
                 data.append(newMessage)
@@ -103,21 +112,26 @@ def manageMessages(action):
 @app.route('/api/sondage', methods=['GET', 'POST'])
 def sondage():
     global screenData 
-    sondageData = screenData['Notifications']['Sondage']
+    sondageData = screenData['Sondage']
     data = request.get_json()
     if request.method == 'GET':
         return sondageData, 200
     elif request.method == 'POST' and data != None:
         if data['data'] == 'oui':
-            screenData['Notifications']['Sondage']['Answer']['oui'] = screenData['Notifications']['Sondage']['Answer']['oui'] + 1
+            screenData['Sondage']['Answer']['oui'] = screenData['Sondage']['Answer']['oui'] + 1
             return {'Message':'Vote taken [Oui]'}, 200
         elif data['data'] == 'non':
-            screenData['Notifications']['Sondage']['Answer']['non'] = screenData['Notifications']['Sondage']['Answer']['non'] + 1
+            screenData['Sondage']['Answer']['non'] = screenData['Sondage']['Answer']['non'] + 1
             return {'Message':'Vote taken [Non]'}, 200
     else:
         return {'error message': 'bad request'}, 400
+
+@app.route('/api/notifications', methods=['GET'])
+def notifications():
+    global screenData
+    return {'Notification': screenData['Notifications']}
         
 
 if __name__ == '__main__':
-    app.run(ssl_context=('cert.pem', 'key.pem'), 
+    app.run(#ssl_context=('cert.pem', 'key.pem'), 
     host="0.0.0.0", debug=True, port=5001)
