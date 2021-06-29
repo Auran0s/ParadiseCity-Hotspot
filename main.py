@@ -40,38 +40,44 @@ screenData = {
 # Route for the screen
 @app.route('/')
 def home():
-   return render_template("screen/index.html")
+   return render_template("/index.html")
 
 @app.route('/livescreen')
 def livescreen():
-    return render_template("screen/livescreen.html")
+    return render_template("/livescreen.html")
 
 # Routing API
+
+@app.route('/api/getData', methods=['GET'])
+def getData():
+    if request.method == 'GET':
+        return screenData, 200
+    else:
+        return {'error messages':'request or screenID not good'}, 400
+
 
 # Switching screen
 @app.route('/api/screen/<screenID>/<action>/<value>', methods=['POST'])
 def screenSwitch(screenID, action, value):
     if request.method == "POST" and screenID != None and screenID == '1' or screenID == '2':
+        print(screenID, action, value)
         global screenData
+        print(screenData)
         # Switch screen views
         if action == 'Live' and value == 'On' and screenData['screensCommands']['screen'+screenID]['Live'] != 'true':
                 screenData['screensCommands']['screen'+screenID]['Live'] = 'true' 
                 screenData['screensCommands']['screen'+screenID]['Home'] = 'false'
                 screenData['Notifications']['askLive'] = 'true'
                 return screenData, 200
-        if action == 'Live' and value == 'Off' and screenData['screensCommands']['screen'+screenID]['Live'] != 'false':
-                screenData['screensCommands']['screen'+screenID]['Live'] = 'false' 
-                screenData['screensCommands']['screen'+screenID]['Home'] = 'true'
+        elif action == 'Live' and value == 'Off':
+                screenData['screensCommands']['screen1']['Live'] = 'false'
+                screenData['screensCommands']['screen1']['Home'] = 'true'
+                screenData['screensCommands']['screen2']['Live'] = 'false'
+                screenData['screensCommands']['screen2']['Home'] = 'true'
                 screenData['Notifications']['askLive'] = 'false'
                 return screenData, 200
-        
         else:
             return {'error messages':'value posted are not the values expected'}, 400
-    elif request.method == 'GET' and screenID != None and screenID == '1' or screenID == '2':
-        if action == 'getData':
-            return screenData, 200
-    else:
-        return {'error messages':'request or screenID not good'}, 400
     
 # Get message
 @app.route('/api/messages/<action>', methods=['GET', 'POST'])

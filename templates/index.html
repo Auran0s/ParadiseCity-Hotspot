@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>screen home</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body class="bg-background overflow-hidden">
+        <div id="liveAlert" class="invisible absolute z-0 text-white text-2xl font-semibold uppercase right-0 mt-10 w-96 px-6 py-4 border-0 rounded mb-4 bg-pink-500">
+            Un live est en cours !
+        </div>
+        <div class="flex flex-wrap content-start">
+                <div class="grid grid-flow-row grid-cols-3 grid-rows-4 gap-4 px-5 py-5">
+                    <div id="div0">
+
+                    </div> 
+                    <div id="div1">
+
+                    </div>
+                    <div id="div2">
+
+                    </div>
+                    <div id="div3">
+                        
+                    </div>
+                    <div id="div4">
+                        
+                    </div>
+                    <div id="div5">
+                        
+                    </div>
+                    <div id="div6">
+                        
+                    </div>
+                    <div id="div7">
+                        
+                    </div>
+                    <div id="div8">
+                        
+                    </div>
+                    <div id="div9">
+                        
+                    </div>
+                    <div id="div10">
+                        
+                    </div>
+                    <div id="div11">
+                        
+                    </div>
+                </div>
+            <div id="sondage" class="invisible relative bg-pink-500 w-full h-screen justify-center px-40">
+                <div id="sondage-text" class="flex justify-center text-white text-2xl font-semibold uppercase leading-relaxed break-words pt-2 pb-4 mx-auto w-auto">
+
+                </div>
+                <div class="h-4 text-xs flex rounded bg-green-200">
+                    <div id="percent" style="width:50%" class="flex flex-col text-center whitespace-nowrap uppercase font-semibold text-white justify-center bg-green-500 rounded">Oui</div>
+                    <div class="flex flex-col text-center whitespace-nowrap uppercase font-semibold text-black justify-center mx-auto">Non</div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
+    </body>
+</html>
