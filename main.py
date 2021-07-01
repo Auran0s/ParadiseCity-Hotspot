@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import json
 import requests
 import time
@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"/api/*": {"Access-Control-Allow-Origin": "*"}})
 
 screenData = {
     'screensCommands':{
@@ -27,7 +27,7 @@ screenData = {
         'askLive':'false'
     },
     'Sondage':{
-        'SondageState':'false',
+        'SondageState':'true',
         "Message":"Aimez-vous les pizzas à l'ananas ?",
         "Answer":{
             "oui":12,
@@ -97,7 +97,11 @@ def manageMessages(action):
         newData = request.get_json()
         if newData != None:
             listContent = list(newData['content'])
-            splitContent = ''.join(listContent[0:250])
+            if len(listContent) >= 250:
+                print(len(listContent))
+                splitContent = ''.join(listContent[0:250]) + ' ...'
+            else:
+                splitContent = newData['content']
             with open("./messages.json", "r+") as file:
                 data = json.load(file)
                 nbOfMessages = len(data)
@@ -106,7 +110,7 @@ def manageMessages(action):
                         "id":nextId,
                         "type":"text",
                         "filtre":newData['filtre'],
-                        "split_content": splitContent+' ...',
+                        "split_content": splitContent,
                         "content":newData['content'],
                     }
                 data.append(newMessage)
@@ -139,5 +143,5 @@ def notifications():
         
 
 if __name__ == '__main__':
-    app.run(#ssl_context=('cert.pem', 'key.pem'), 
+    app.run(ssl_context=('cert.pem', 'key.pem'), 
     host="0.0.0.0", debug=True, port=5001)

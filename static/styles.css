@@ -521,7 +521,7 @@ video {
 }
 
 .card{
-  height: auto;
+  height: 24rem;
   width: 100%;
   border-radius: 0.25rem;
   --tw-bg-opacity: 1;
