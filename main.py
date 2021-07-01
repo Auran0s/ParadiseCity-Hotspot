@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"Access-Control-Allow-Origin": "*"}})
+cors = CORS(app)
 
 screenData = {
     'screensCommands':{
