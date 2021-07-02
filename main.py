@@ -14,6 +14,7 @@ cors = CORS(app)
 
 screenData = {
     'screensCommands':{
+        ""
         "screen1":{
             'Home': 'true',
             'Live': 'false',
@@ -57,16 +58,22 @@ def getData():
 
 
 # Switching screen
-@app.route('/api/screen/<screenID>/<action>/<value>', methods=['POST'])
-def screenSwitch(screenID, action, value):
-    if request.method == "POST" and screenID != None and screenID == '1' or screenID == '2':
-        print(screenID, action, value)
+@app.route('/api/screen/<action>/<value>', methods=['POST'])
+def screenSwitch(action, value):
+    if request.method == "POST" and action != None and value != None:
+        print(action, value)
         global screenData
         print(screenData)
         # Switch screen views
-        if action == 'Live' and value == 'On' and screenData['screensCommands']['screen'+screenID]['Live'] != 'true':
-                screenData['screensCommands']['screen'+screenID]['Live'] = 'true' 
-                screenData['screensCommands']['screen'+screenID]['Home'] = 'false'
+        if action == 'Live' and value == 'On':
+            if screenData['screensCommands']['screen1']['Live'] == 'false' and screenData['screensCommands']['screen2']['Live'] == 'false':
+                screenData['screensCommands']['screen1']['Live'] = 'true' 
+                screenData['screensCommands']['screen1']['Home'] = 'false'
+                screenData['Notifications']['askLive'] = 'true'
+                return screenData, 200
+            elif screenData['screensCommands']['screen1']['Live'] == 'true' and screenData['screensCommands']['screen2']['Live'] == 'false':
+                screenData['screensCommands']['screen2']['Live'] = 'true' 
+                screenData['screensCommands']['screen2']['Home'] = 'false'
                 screenData['Notifications']['askLive'] = 'true'
                 return screenData, 200
         elif action == 'Live' and value == 'Off':
