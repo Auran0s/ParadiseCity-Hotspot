@@ -93,13 +93,13 @@ def manageMessages(action):
         with open("./messages.json", "r") as file:
             data = json.load(file)
             nbOfMessages = len(data)
-            if nbOfMessages > 12:
-                lastMessage = nbOfMessages - 12
+            if nbOfMessages > 15:
+                lastMessage = nbOfMessages - 15
                 file.close()
                 return {'Messages':data[lastMessage:nbOfMessages]}, 200
             else:
                 file.close()
-                return {'Messages':data[0:11]}, 200 
+                return {'Messages':data[0:14]}, 200 
     elif request.method == 'POST' and action == 'newMessageText':
         newData = request.get_json()
         if newData != None:
