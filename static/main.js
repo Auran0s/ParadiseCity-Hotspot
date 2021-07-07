@@ -1,5 +1,5 @@
 import "./styles.css.proxy.js";
-let url = 'https://192.168.1.40:5001/api/'
+let url = '/api/'
 function checkMessages(){
 
   fetch(url+'messages/getData').then(function(response) {
