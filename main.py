@@ -84,7 +84,7 @@ def screenSwitch(action, value):
                 return screenData, 200
         else:
             return {'error messages':'value posted are not the values expected'}, 400
-    else request.method == 'GET' and action == None and value == None:
+    else:
         return screenData, 200
     
 # Get message
