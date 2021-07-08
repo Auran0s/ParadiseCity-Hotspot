@@ -1,8 +1,8 @@
 import "./styles.css.proxy.js";
-let url = '/api/'
+let url = 'api'
 function checkMessages(){
 
-  fetch(url+'messages/getData').then(function(response) {
+  fetch(url+'/messages/getData').then(function(response) {
       return response.json();
     }).then(function(dataMessages) {
       for (let i in dataMessages['Messages']){
@@ -68,7 +68,7 @@ function checkMessages(){
 };
 
 function sondage(){
-  fetch(url+'sondage').then(function(response) {
+  fetch(url+'/sondage').then(function(response) {
     return response.json();
   }).then(function(data) {
     if (data['SondageState'] == 'true') {
@@ -80,7 +80,7 @@ function sondage(){
     let sondageText = document.getElementById('sondage-text');
     sondageText.innerHTML = data['Message'];
 
-    let percent = Number(data['Answer']['oui']) * 100 / Number(data['Answer']['non']);
+    let percent = Number(data['Answer']['oui']) * 100 / Number(data['Answer']['non'] + data['Answer']['oui']);
     if (percent <= 100){
       document.getElementById('percent').style.width = Number(Math.round(percent)) + '%';
       document.getElementById('percent').innerHTML = 'oui (' + Number(Math.round(percent)) + '%)';
@@ -93,12 +93,11 @@ function sondage(){
       document.getElementById('percent').innerHTML = 'oui (100%)';
       document.getElementById('non').innerHTML = 'non (0%)';
     }
-
   });
 };
 
 function liveChecking(){
-  fetch(url+'notifications').then(function(response) {
+  fetch(url+'/notifications').then(function(response) {
     return response.json();
   }).then(function(data) {
     console.log(data['Notification']['askLive'])
@@ -111,6 +110,17 @@ function liveChecking(){
   });
 };
 
+function checkControl(){
+  fetch('/api/screenSwitch/GetData').then(function(response) {
+      return response.json();
+    }).then(function(data) {
+      console.log(data['screensCommands']);
+      if (data['screensCommands']['screen1']['Live'] == 'true' && data['screensCommands']['screen2']['Live'] == 'true') {
+          document.location.href = '/livescreen';
+      }
+    });
+}
+
 checkMessages();
-var interval = setInterval(function () { sondage(); liveChecking(); checkMessages(); }, 1000);
+var interval = setInterval(function () { sondage(); liveChecking(); checkMessages(); checkControl(); }, 1000);
 

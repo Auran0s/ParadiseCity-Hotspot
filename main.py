@@ -14,7 +14,6 @@ cors = CORS(app)
 
 screenData = {
     'screensCommands':{
-        ""
         "screen1":{
             'Home': 'true',
             'Live': 'false',
@@ -29,10 +28,10 @@ screenData = {
     },
     'Sondage':{
         'SondageState':'true',
-        "Message":"Aimez-vous les pizzas à l'ananas ?",
+        "Message":"Si ce dispositif se trouvait dans votre ville, seriez-vous un des ses utilisateurs ?",
         "Answer":{
-            "oui":12,
-            "non":27
+            "oui":50,
+            "non":50
         }
     }
 }
@@ -85,6 +84,8 @@ def screenSwitch(action, value):
                 return screenData, 200
         else:
             return {'error messages':'value posted are not the values expected'}, 400
+    else request.method == 'GET' and action == None and value == None:
+        return screenData, 200
     
 # Get message
 @app.route('/api/messages/<action>', methods=['GET', 'POST'])

@@ -65,16 +65,17 @@
                     </div>
                 </div>
                 <div class="absolute bottom-0 w-screen h-auto">
-                    <div id="sondage" class="invisible relative bg-pink-500 w-full h-auto justify-center px-40 pt-5 pb-10">
-                        <div id="sondage-text" class="flex justify-center text-white text-2xl font-semibold uppercase leading-relaxed break-words pt-2 pb-4 mx-auto w-auto">
+                    <div id="sondage" class="invisible relative bg-indigo-800 w-full h-auto justify-center px-40 pt-5 pb-10">
+                        <div id="sondage-text" class="flex justify-center text-center text-white text-2xl font-semibold leading-relaxed break-words pt-2 pb-4 mx-auto w-auto">
         
                         </div>
-                        <div class="h-4 text-xs flex rounded bg-green-200">
-                            <div id="percent" style="width:50%" class="flex flex-col text-center whitespace-nowrap uppercase font-semibold text-white justify-center bg-green-500 rounded">Oui</div>
+                        <div class="h-4 text-xs flex rounded bg-gray-400">
+                            <div id="percent" style="width:50%" class="flex flex-col text-center whitespace-nowrap uppercase font-semibold text-black justify-center bg-gray-100 rounded">Oui</div>
                             <div id="non" class="flex flex-col text-center whitespace-nowrap uppercase font-semibold text-black justify-center mx-auto">Non</div>
                         </div>
                     </div>
                 </div>
+            
         </div>
 
         <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
